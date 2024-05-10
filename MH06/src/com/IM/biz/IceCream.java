@@ -8,14 +8,14 @@ import com.IM.utils.Utils;
 
 /**
  *
- * @author enriquenogal
+ * @author Jaime
  */
 public class IceCream {
     private String position;
     private String name;
     private double cost;
     private String type;
-    private int quantity = 5;
+    private int quantity;
 
     public IceCream(String position, String name, double cost, String type) {
         this.position = position;

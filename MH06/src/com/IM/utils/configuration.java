@@ -2,15 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.IM.exceptions;
+package com.IM.utils;
 
 /**
  *
- * @author Jaime
+ * @author dev
  */
-public class NotEnoughMoneyException extends Exception {
+public class configuration {
 
-    public NotEnoughMoneyException(String msg) {
-        super(msg);
-    }
+    public static final String URL = "jdbc:sqlite:./helados.db";
+    public static final String DRIVER = "org.sqlite.JDBC";
+
 }
