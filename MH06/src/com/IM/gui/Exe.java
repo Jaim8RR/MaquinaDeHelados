@@ -8,7 +8,7 @@ import com.IM.exceptions.NotEnoughMoneyException;
 import com.IM.exceptions.QuantityExceededException;
 import com.IM.exceptions.NotValidPositionException;
 import com.IM.biz.IceCream;
-import com.IM.biz.IcecreamMachine;
+import com.IM.biz.IceCreamMachine;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -22,7 +22,7 @@ public class Exe {
 
   
     static IceCream icecream;
-    static IcecreamMachine IM;
+    static IceCreamMachine IM = new IceCreamMachine();
     static Scanner sc = new Scanner(System.in);
     static ArrayList<IceCream> iceCreams;
     static String position;
@@ -39,7 +39,7 @@ public class Exe {
         
     }
 
-    public static void putMoney(IcecreamMachine IM, Scanner sc) {
+    public static void putMoney(IceCreamMachine IM, Scanner sc) {
         String choice;
         System.out.println("---------Introduzca monedas--------");
         showCoins();
@@ -88,7 +88,7 @@ public class Exe {
             System.out.print("Elige una opción: ");
             option = sc.nextLine();
             if (!(option.equalsIgnoreCase("1") || option.equalsIgnoreCase("2") || option.equalsIgnoreCase("S"))) {
-                System.out.println("Opcion no valida elige una de las siguientes");
+                System.out.println("Opcion no valida.");
             }
         } while (!(option.equalsIgnoreCase("1") || option.equalsIgnoreCase("2") || option.equalsIgnoreCase("S")));
         return option;
@@ -106,12 +106,13 @@ public class Exe {
 
     public static void displayIcecreams() {
         try {
-            iceCreams = IM.showIceCreams();
+            ArrayList<IceCream> iceCreams = IM.showIceCreams();
             for (IceCream iceCream : iceCreams) {
                 System.out.println(iceCream);
             }
         } catch (Exception ex) {
-            Logger.getLogger(Exe.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("No se ha podido recuperar la lista de helados");
+            ex.printStackTrace();
         }
     }
 

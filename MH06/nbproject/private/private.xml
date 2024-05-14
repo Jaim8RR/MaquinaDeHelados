@@ -4,9 +4,8 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/home/dev/NetBeansProjects/MaquinaDeHelados/MH06/src/com/IM/utils/configuration.java</file>
-            <file>file:/home/dev/NetBeansProjects/MaquinaDeHelados/MH06/src/com/IM/implement/IceCreamDAOimpl.java</file>
             <file>file:/home/dev/NetBeansProjects/MaquinaDeHelados/MH06/src/com/IM/gui/Exe.java</file>
-            <file>file:/home/dev/NetBeansProjects/MaquinaDeHelados/MH06/src/com/IM/dao/interfaces/IceCreamDAO.java</file>
+            <file>file:/home/dev/NetBeansProjects/MaquinaDeHelados/MH06/src/com/IM/exceptions/QuantityExceededException.java</file>
         </group>
     </open-files>
 </project-private>

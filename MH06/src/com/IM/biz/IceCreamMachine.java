@@ -18,19 +18,19 @@ import java.util.ArrayList;
  *
  * @author Jaime
  */
-public class IcecreamMachine {
+public class IceCreamMachine {
 
     private double purse = 0;
     private double revenue = 0;
     
     public ArrayList<IceCream> showIceCreams() throws Exception {
-        ArrayList<IceCream> IceCreamList;
+        ArrayList<IceCream> iceCreamList;
         try (IceCreamDAOimpl IceCream = new IceCreamDAOimpl(){}) {
-            IceCreamList = (ArrayList) IceCream.getIceCream();
+            iceCreamList =  IceCream.getIceCream();
         } catch (Exception e) {
             throw e;
         }
-        return IceCreamList;
+        return iceCreamList;
     }
     public ArrayList<Sales> showSales() throws Exception {
         ArrayList<Sales> SalesList;

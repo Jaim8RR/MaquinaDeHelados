@@ -15,6 +15,7 @@ import com.IM.utils.*;
  * @author dev
  */
 public class IceCreamDAOimpl implements IceCreamDAO, AutoCloseable {
+
     static {
         try {
             Class.forName(com.IM.utils.configuration.DRIVER);
@@ -30,10 +31,10 @@ public class IceCreamDAOimpl implements IceCreamDAO, AutoCloseable {
 
     @Override
     public IceCream getIceCreamByPos(String posicion) throws Exception {
-    
+
         IceCream iceCream = null;
-        ResultSet rs =null;
-        String sql = "SELECT * FROM helado WHERE posicion = ?"; 
+        ResultSet rs = null;
+        String sql = "SELECT * FROM helado WHERE posicion = ?";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, posicion);
             rs = ps.executeQuery();
@@ -52,7 +53,7 @@ public class IceCreamDAOimpl implements IceCreamDAO, AutoCloseable {
 
     @Override
     public void updateIceCream(IceCream h) throws Exception {
-    
+
         String sql = "update helado set cantidad = ?, nombre = ?, tipo = ?, precio = ? WHERE posicion = ?";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, h.getQuantity());
@@ -67,25 +68,24 @@ public class IceCreamDAOimpl implements IceCreamDAO, AutoCloseable {
     }
 
     @Override
-    public ArrayList<IceCream> getIceCream() throws Exception {
-   
-             ArrayList<IceCream> IceCreams = new ArrayList<IceCream>();
+    public ArrayList<IceCream> getIceCream() throws Exception {//con este se ven todo los helados 
+        ArrayList<IceCream> IceCreams = new ArrayList<IceCream>();
         IceCream iceCream;
-        String sql = "SELECT * FROM helado"; //quitar el asterisco para poner el listado de los campos
+        String sql = "SELECT * FROM helado";
         try (PreparedStatement ps = con.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 iceCream = new IceCream(rs.getString(1), rs.getString(2), rs.getDouble(3), rs.getString(4), rs.getInt(5));
                 IceCreams.add(iceCream);
             }
         } catch (Exception e) {
-            System.out.println("._. Ha ocurrido un error");
+            throw e;
         }
         return IceCreams;
     }
 
     @Override
     public void refill() throws Exception {
-       // throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        // throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
         String sql = "update helado set cantidad = 5 ";
         try (PreparedStatement pstm = con.prepareStatement(sql)) {
             pstm.executeUpdate();
@@ -96,9 +96,8 @@ public class IceCreamDAOimpl implements IceCreamDAO, AutoCloseable {
 
     @Override
     public void close() throws Exception {
-       //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
         con.close();
     }
-    
-    
+
 }
