@@ -26,7 +26,7 @@ public class SalesDAOimpl implements SalesDAO, AutoCloseable {
 
     public SalesDAOimpl() throws Exception {
         con = DriverManager.getConnection(com.IM.utils.configuration.URL);
-        System.out.println("mondongo");
+        
     }
 
     @Override
