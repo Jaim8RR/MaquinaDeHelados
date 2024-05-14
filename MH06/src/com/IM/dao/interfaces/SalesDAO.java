@@ -5,19 +5,15 @@
 package com.IM.dao.interfaces;
 
 import com.IM.biz.IceCream;
+import com.IM.biz.Sales;
 import java.util.ArrayList;
 
 /**
  *
- * @author dev
+ * @author Jaime Riesgo
  */
-public interface IceCreamDAO  {
-   
-    public IceCream getIceCreamByPos(String posicion) throws Exception;
+public interface SalesDAO {
+    public void saveSale(IceCream iceCream) throws Exception;
 
-    public void updateIceCream(IceCream h) throws Exception;
-
-    public ArrayList<IceCream> getIceCream() throws Exception;
-
-    public void refill() throws Exception;
+    public ArrayList<Sales> getSales() throws Exception;
 }

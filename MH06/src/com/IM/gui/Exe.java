@@ -9,38 +9,37 @@ import com.IM.exceptions.QuantityExceededException;
 import com.IM.exceptions.NotValidPositionException;
 import com.IM.biz.IceCream;
 import com.IM.biz.IcecreamMachine;
+import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Jaime Riesgo, Sinahy Cacique
  */
 public class Exe {
-       static final String JBDC_DRIVER = "org.sqlite.JDBC";
-       static IceCream icecream;
-       static String position;
-       static IcecreamMachine IM;
-       static Scanner sc = new Scanner(System.in);
+
+  
+    static IceCream icecream;
+    static IcecreamMachine IM;
+    static Scanner sc = new Scanner(System.in);
+    static ArrayList<IceCream> iceCreams;
+    static String position;
 
     public static void main(String[] args) {
-        
-        
-        try {
-            Class.forName(JBDC_DRIVER);
-        } catch (Exception e) {
-            System.out.println("El driver de la base de dato no se ha podido cargar");
-        }
+
         String choice;
-        IcecreamMachine im =null;
-        
+       
+
         do {
             choice = menu();
-            accions(choice);
+            accions(choice);//accions(menu());
         } while (!choice.equalsIgnoreCase("S"));
-        exit(im);
+        
     }
 
-    public static void putMoney(IcecreamMachine mh, Scanner sc) {
+    public static void putMoney(IcecreamMachine IM, Scanner sc) {
         String choice;
         System.out.println("---------Introduzca monedas--------");
         showCoins();
@@ -53,8 +52,8 @@ public class Exe {
                 System.out.print("Opción incorrecta. ");
             } else {
                 if (!choice.equalsIgnoreCase("S")) {
-                    mh.setPurse(mh.getPurse() + translateChoiceToMoney(choice.toUpperCase()));
-                    System.out.println("El dinero acumulado es: " + mh.getPurse() + "€");
+                    IM.setPurse(IM.getPurse() + translateChoiceToMoney(choice.toUpperCase()));
+                    System.out.println("El dinero acumulado es: " + IM.getPurse() + "€");
                 }
             }
         } while (!(choice.equalsIgnoreCase("S")));
@@ -79,6 +78,22 @@ public class Exe {
         }
     }
 
+    public static String menuDebug(Scanner sc) {
+        String option;
+        do {
+            System.out.println("-------------------------");
+            System.out.println("1.- Rellenar maquina");
+            System.out.println("2.- Historial de ventas");
+            System.out.println("S.- Salir");
+            System.out.print("Elige una opción: ");
+            option = sc.nextLine();
+            if (!(option.equalsIgnoreCase("1") || option.equalsIgnoreCase("2") || option.equalsIgnoreCase("S"))) {
+                System.out.println("Opcion no valida elige una de las siguientes");
+            }
+        } while (!(option.equalsIgnoreCase("1") || option.equalsIgnoreCase("2") || option.equalsIgnoreCase("S")));
+        return option;
+    }
+
     public static void showCoins() {
         System.out.println("A.- 0,05€");
         System.out.println("B.- 0,10€");
@@ -89,22 +104,25 @@ public class Exe {
         System.out.println("S.- Salir");
     }
 
-    public static void displayIcecreams(IcecreamMachine mh) {
-        System.out.println("-----Listado de helados------");
-        System.out.println(mh);
-        System.out.println("-----------------------------");
-        System.out.println("Dispones de " + mh.getPurse() + "€");
-        System.out.println("-----------------------------");
+    public static void displayIcecreams() {
+        try {
+            iceCreams = IM.showIceCreams();
+            for (IceCream iceCream : iceCreams) {
+                System.out.println(iceCream);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(Exe.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
-    public static void exit(IcecreamMachine mh) {
-        System.out.println("-----------------------------");
-        System.out.println("Apagando máquina de helados.....");
-        System.out.println("No olvide recoger su cambio: " + mh.getPurse() + "€");
-        System.out.println("Ingresos totales de la máquina de helados: " + mh.getRevenue() + "€");
-        System.out.println("-----------------------------");
+    public static void exit() {
+        System.out.println("------------------------------");
+        System.out.println("Hasta la porximaa ...");
+        System.out.println("Tu cambio: " + IM.getPurse() + "€");
+        System.out.println("Ingresos: " + IM.getRevenue() + "€");
+        System.out.println("------------------------------");
         try {
-           // mh.saveData(FILE_NAME);
+            // IC.saveData(FILE_NAME);
             System.out.println("Datos almacenados");
         } catch (Exception e) {
             System.out.println("Se ha producido un error al guardar los datos");
@@ -128,30 +146,30 @@ public class Exe {
 
     private static void accions(String opcion) {
         if (opcion.equals("1")) {
-                displayIcecreams(IM);
-            } else if (opcion.equals("2")) {
-                putMoney(IM, sc);
-            } else if (opcion.equals("3")) {
-//                System.out.println("------------Pedir Helado-------------");
-//                System.out.print("Introduzca la posición: ");
-//                position = sc.nextLine();
-//                try {
-//                    icecream = IM.getIcecream(position);
-//                    if (icecream != null) {
-//                        System.out.println("Aquí tiene su " + icecream.getName() + " de tipo " + icecream.getType());
-//                        System.out.println("No olvide su cambio: " + IM.getPurse() + "€");
-//                        IM.setPurse(0);
-//                    }
-//                } catch (NotValidPositionException e) {
-//                    System.out.println("Posición introducida inexistente");
-//                } catch (QuantityExceededException e) {
-//                    System.out.println("No quedan helados en esa posición");
-//                } catch (NotEnoughMoneyException e) {
-//                    System.out.println("No tiene dinero suficiente para ese helado");
-//                } catch (Exception e) {
-//                    System.out.println("Se ha producido un error inesperado. Por favor, contacte con el administrador.");
-//                }
-            }
+            displayIcecreams();
+        } else if (opcion.equals("2")) {
+            putMoney(IM, sc);
+        } else if (opcion.equals("3")) {
+                System.out.println("------------Pedir Helado-------------");
+                System.out.print("Introduzca la posición: ");
+                position = sc.nextLine();
+                try {
+                    icecream = IM.getIceCreamFromMachine(position);
+                    if (icecream != null) {
+                        System.out.println("Aquí tiene su " + icecream.getName() + " de tipo " + icecream.getType());
+                        System.out.println("No olvide su cambio: " + IM.getPurse() + "€");
+                        IM.setPurse(0);
+                    }
+                } catch (NotValidPositionException e) {
+                    System.out.println("Posición introducida inexistente");
+                } catch (QuantityExceededException e) {
+                    System.out.println("No quedan helados en esa posición");
+                } catch (NotEnoughMoneyException e) {
+                    System.out.println("No tiene dinero suficiente para ese helado");
+                } catch (Exception e) {
+                    System.out.println("Se ha producido un error inesperado. Por favor, contacte con el administrador.");
+                }
+        }
     }
 
 }

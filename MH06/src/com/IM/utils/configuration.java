@@ -10,7 +10,7 @@ package com.IM.utils;
  */
 public class configuration {
 
-    public static final String URL = "jdbc:sqlite:./helados.db";
+    public static final String URL = "jdbc:sqlite:/C:\\Users\\Jaime Riesgo\\Desktop\\squilite\\sqlite-tools-win-x64-3450300/helados.db";
     public static final String DRIVER = "org.sqlite.JDBC";
 
 }
