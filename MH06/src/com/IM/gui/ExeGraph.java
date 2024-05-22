@@ -7,9 +7,13 @@ package com.IM.gui;
 import com.IM.biz.IceCream;
 import com.IM.biz.IceCreamMachine;
 import static com.IM.gui.Exe.IM;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -18,30 +22,34 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ExeGraph extends javax.swing.JFrame {
 static IceCreamMachine IM = new IceCreamMachine();
+static DecimalFormat df = new DecimalFormat("#0.00");
     /**
      * Creates new form ExeGraph
      */
     public ExeGraph() {
         initComponents();
+        setIconImage( new ImageIcon(getClass().getResource("/img/helado.png")).getImage());
     }
 private void updateTablaHelados() {
-               
-        
+     ArrayList<IceCream> iceCreams = null;          
+       
                 try {
-                    ArrayList<IceCream> iceCreams = IM.showIceCreams();
+                    iceCreams = IM.showIceCreams();
                     DefaultTableModel m = (DefaultTableModel) TablaHelados.getModel();
+                    m.setRowCount(0);
+                   
                     
                     for (IceCream iceCream : iceCreams) {
-                        Object[] o = {iceCream.getPosition(),iceCream.getName(),iceCream.getCost(),iceCream.getType(),iceCream.getQuantity()};
+                        Object[] o = {iceCream.getPosition(),iceCream.getName(),df.format(iceCream.getCost()),iceCream.getType(),iceCream.getQuantity()};
                         m.addRow(o);
                     }
                 } catch (Exception ex) {
                     Logger.getLogger(ExeGraph.class.getName()).log(Level.SEVERE, null, ex);
                 }
-       
+        
     }
 public void updatejLabelTextDinero() {
-    jLabelTextDinero.setText("Dinero: "+IM.getPurse()+"€");
+    jLabelTextDinero.setText("Dinero: "+df.format(IM.getPurse())+"€");
 }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -52,6 +60,7 @@ public void updatejLabelTextDinero() {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenu1 = new javax.swing.JMenu();
         jScrollPane1 = new javax.swing.JScrollPane();
         TablaHelados = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
@@ -72,6 +81,13 @@ public void updatejLabelTextDinero() {
         jPanel2 = new javax.swing.JPanel();
         jLabelTextDinero = new javax.swing.JLabel();
         Introducir_Dinero = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItemVentas = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
+
+        jMenu1.setText("jMenu1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Maquina de helados Jaime Y Sina");
@@ -104,8 +120,14 @@ public void updatejLabelTextDinero() {
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
+        TablaHelados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TablaHeladosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(TablaHelados);
 
+        jPanel1.setBackground(new java.awt.Color(255, 204, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jLabelElecion.setFont(new java.awt.Font("Lucida Console", 1, 18)); // NOI18N
@@ -265,13 +287,14 @@ public void updatejLabelTextDinero() {
                     .addComponent(button00, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(buttonBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(buttonConfirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createCompoundBorder());
 
+        jLabelTextDinero.setBackground(new java.awt.Color(0, 204, 204));
         jLabelTextDinero.setFont(new java.awt.Font("Lucida Console", 1, 18)); // NOI18N
-        jLabelTextDinero.setText("Dinero: "+IM.getPurse()+"€");
+        jLabelTextDinero.setText("Dinero: "+df.format(IM.getPurse())+"€");
 
         Introducir_Dinero.setText("Introducir Dinero");
         Introducir_Dinero.setToolTipText("Solo effectivo.");
@@ -286,7 +309,7 @@ public void updatejLabelTextDinero() {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addGap(112, 112, 112)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(Introducir_Dinero)
                     .addComponent(jLabelTextDinero))
@@ -294,38 +317,67 @@ public void updatejLabelTextDinero() {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(59, 59, 59)
-                .addComponent(jLabelTextDinero)
-                .addGap(18, 18, 18)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(37, 37, 37)
                 .addComponent(Introducir_Dinero)
-                .addContainerGap(224, Short.MAX_VALUE))
+                .addGap(58, 58, 58)
+                .addComponent(jLabelTextDinero)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/giphy.gif"))); // NOI18N
+
+        jMenu2.setText("Opciones");
+
+        jMenuItemVentas.setText("ventas");
+        jMenuItemVentas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemVentasActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItemVentas);
+
+        jMenuItem1.setText("Rellenar Maquina");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGap(60, 60, 60)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 638, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(799, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1)
+                .addContainerGap(98, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(80, 80, 80)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(98, Short.MAX_VALUE))
+                .addGap(32, 32, 32)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jLabel1))
+                .addContainerGap(377, Short.MAX_VALUE))
         );
 
         pack();
@@ -337,47 +389,76 @@ public void updatejLabelTextDinero() {
 
     private void button08ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button08ActionPerformed
 // TODO add your handling code here:
-        jLabelPosicion.setText(jLabelPosicion.getText()+"8");
+ if (jLabelPosicion.getText().length()<2) {
+         jLabelPosicion.setText(jLabelPosicion.getText()+"8");
+        }
+        
     }//GEN-LAST:event_button08ActionPerformed
 
     private void button09ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button09ActionPerformed
         // TODO add your handling code here:
-        jLabelPosicion.setText(jLabelPosicion.getText()+"9");
+        if (jLabelPosicion.getText().length()<2) {
+         jLabelPosicion.setText(jLabelPosicion.getText()+"9");
+        }
+       
     }//GEN-LAST:event_button09ActionPerformed
 
     private void button07ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button07ActionPerformed
         // TODO add your handling code here:
-        jLabelPosicion.setText(jLabelPosicion.getText()+"7");
+        if (jLabelPosicion.getText().length()<2) {
+         jLabelPosicion.setText(jLabelPosicion.getText()+"7");
+        }
+        
     }//GEN-LAST:event_button07ActionPerformed
 
     private void button04ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button04ActionPerformed
         // TODO add your handling code here:
-       jLabelPosicion.setText(jLabelPosicion.getText()+"6");
+        if (jLabelPosicion.getText().length()<2) {
+         jLabelPosicion.setText(jLabelPosicion.getText()+"4");
+        }
+       
     }//GEN-LAST:event_button04ActionPerformed
 
     private void button03ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button03ActionPerformed
         // TODO add your handling code here:
+        if (jLabelPosicion.getText().length()<2) {
          jLabelPosicion.setText(jLabelPosicion.getText()+"3");
+        }
+         
     }//GEN-LAST:event_button03ActionPerformed
 
     private void button01ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button01ActionPerformed
         // TODO add your handling code here:
-         jLabelPosicion.setText(jLabelPosicion.getText()+"1");
+         if (jLabelPosicion.getText().length()<2) {
+          jLabelPosicion.setText(jLabelPosicion.getText()+"1");
+        }
+        
     }//GEN-LAST:event_button01ActionPerformed
 
     private void button02ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button02ActionPerformed
         // TODO add your handling code here:
-         jLabelPosicion.setText(jLabelPosicion.getText()+"2");
+        if (jLabelPosicion.getText().length()<2) {
+          jLabelPosicion.setText(jLabelPosicion.getText()+"2");
+        }
+         
     }//GEN-LAST:event_button02ActionPerformed
 
     private void button05ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button05ActionPerformed
         // TODO add your handling code here:
-         jLabelPosicion.setText(jLabelPosicion.getText()+"5");
+        if (jLabelPosicion.getText().length()<2) {
+                    jLabelPosicion.setText(jLabelPosicion.getText()+"5");
+
+        }
+         
     }//GEN-LAST:event_button05ActionPerformed
 
     private void button00ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button00ActionPerformed
         // TODO add your handling code here:
-      jLabelPosicion.setText(jLabelPosicion.getText()+"0");
+        if (jLabelPosicion.getText().length()<2) {
+                           jLabelPosicion.setText(jLabelPosicion.getText()+"0");   
+
+        }
+      
     }//GEN-LAST:event_button00ActionPerformed
 
     private void buttonBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBorrarActionPerformed
@@ -386,8 +467,26 @@ public void updatejLabelTextDinero() {
     }//GEN-LAST:event_buttonBorrarActionPerformed
 
     private void buttonConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonConfirmarActionPerformed
-        // TODO add your handling code here:
-        
+    try {
+        // TODO add your handling code here://este es para pedir helados
+        IceCream icecream;
+        icecream = IM.getIceCreamFromMachine(jLabelPosicion.getText());
+            if (icecream != null) {
+
+                JOptionPane.showMessageDialog(rootPane, "Aquí tiene su " + icecream.getName() + " de tipo " + icecream.getType() , "Helado comprado!", HEIGHT);
+               
+                System.out.println("Total restante: " + df.format(IM.getPurse()) + "€");
+                updatejLabelTextDinero();
+                updateTablaHelados();
+                jLabelPosicion.setText("");
+
+            } 
+                
+            
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(rootPane, "ERROR", "Helado comprado!", HEIGHT);
+        Logger.getLogger(ExeGraph.class.getName()).log(Level.SEVERE, null, ex);
+    }
     }//GEN-LAST:event_buttonConfirmarActionPerformed
 
     private void button06ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button06ActionPerformed
@@ -400,6 +499,39 @@ public void updatejLabelTextDinero() {
         InsertMoneyJDialog insertMoney = new InsertMoneyJDialog(this,true);//Este true significa que es modal
         insertMoney.setVisible(true);
     }//GEN-LAST:event_Introducir_DineroActionPerformed
+
+    private void jMenuItemVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemVentasActionPerformed
+        // TODO add your handling code here:
+        SalesJDialog sales = new SalesJDialog(this,true);//Este true significa que es modal
+        sales.setVisible(true);
+    }//GEN-LAST:event_jMenuItemVentasActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    try {
+        // TODO add your handling code here:
+        IM.refillIceCreams();
+        updateTablaHelados();
+    } catch (Exception ex) {
+        Logger.getLogger(ExeGraph.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void TablaHeladosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaHeladosMouseClicked
+        // TODO add your handling code here:
+              DefaultTableModel m = (DefaultTableModel) this.TablaHelados.getModel();
+String posicion;
+        // Obtén el índice de la fila seleccionada
+        int rowIndex = this.TablaHelados.rowAtPoint(evt.getPoint());
+
+        // Asegúrate de que la fila está dentro del rango de la tabla
+        if (rowIndex >= 0 && rowIndex < m.getRowCount()) {
+            // Obtén el valor de la columna 1 (segunda columna, ya que el índice comienza en 0)
+            Object pos = m.getValueAt(rowIndex, 0);
+       posicion = pos.toString();
+            // Aquí puedes agregar el código para trabajar con la posición obtenida
+            this.jLabelPosicion.setText(posicion);
+        }
+    }//GEN-LAST:event_TablaHeladosMouseClicked
 
     /**
      * @param args the command line arguments
@@ -456,9 +588,15 @@ public void updatejLabelTextDinero() {
     private java.awt.Button button09;
     private java.awt.Button buttonBorrar;
     private java.awt.Button buttonConfirmar;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelElecion;
     private javax.swing.JLabel jLabelPosicion;
     private javax.swing.JLabel jLabelTextDinero;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItemVentas;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

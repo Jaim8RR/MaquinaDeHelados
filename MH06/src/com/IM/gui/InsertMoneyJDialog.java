@@ -5,6 +5,7 @@
 package com.IM.gui;
 
 import static com.IM.gui.ExeGraph.IM;
+import static com.IM.gui.ExeGraph.df;
 
 /**
  *
@@ -84,7 +85,7 @@ public class InsertMoneyJDialog extends javax.swing.JDialog {
         });
 
         jLabelTextDinero.setFont(new java.awt.Font("Lucida Console", 1, 18)); // NOI18N
-        jLabelTextDinero.setText("Dinero: "+IM.getPurse()+"€");
+        jLabelTextDinero.setText("Dinero: "+df.format(IM.getPurse())+"€");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -222,7 +223,7 @@ public ExeGraph padre;
     // End of variables declaration//GEN-END:variables
 
     private void actualizarDisplay() {
-        jLabelTextDinero.setText("Dinero: "+IM.getPurse()+"€");
+        jLabelTextDinero.setText("Dinero: "+df.format(IM.getPurse())+"€");
         padre.updatejLabelTextDinero();
     }
 }

@@ -129,7 +129,7 @@
           <Font name="Lucida Console" size="18" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="&quot;Dinero: &quot;+IM.getPurse()+&quot;&#x20ac;&quot;" type="code"/>
+          <Connection code="&quot;Dinero: &quot;+df.format(IM.getPurse())+&quot;&#x20ac;&quot;" type="code"/>
         </Property>
       </Properties>
     </Component>
