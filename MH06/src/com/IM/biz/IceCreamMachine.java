@@ -12,8 +12,6 @@ import com.IM.implement.SalesDAOimpl;
 import com.IM.utils.Utils;
 import java.util.ArrayList;
 
-
-
 /**
  *
  * @author Jaime
@@ -22,16 +20,18 @@ public class IceCreamMachine {
 
     private double purse = 0;
     private double revenue = 0;
-    
+
     public ArrayList<IceCream> showIceCreams() throws Exception {
         ArrayList<IceCream> iceCreamList;
-        try (IceCreamDAOimpl IceCream = new IceCreamDAOimpl(){}) {
-            iceCreamList =  IceCream.getIceCream();
+        try (IceCreamDAOimpl IceCream = new IceCreamDAOimpl() {
+        }) {
+            iceCreamList = IceCream.getIceCream();
         } catch (Exception e) {
             throw e;
         }
         return iceCreamList;
     }
+
     public ArrayList<Sales> showSales() throws Exception {
         ArrayList<Sales> SalesList;
         try (SalesDAOimpl sales = new SalesDAOimpl()) {
@@ -42,22 +42,24 @@ public class IceCreamMachine {
         return SalesList;
 
     }
+
     public IceCream getIceCreamFromMachine(String position) throws Exception, NotValidPositionException, QuantityExceededException, NotEnoughMoneyException {
         IceCream iceCream = null;
-   
+
         try (IceCreamDAOimpl helado = new IceCreamDAOimpl(); SalesDAOimpl ventas = new SalesDAOimpl()) {
             iceCream = helado.getIceCreamByPos(position);
             if (iceCream == null) {
                 throw new NotValidPositionException();
-            } else if (iceCream.getQuantity()<= 0) {
+            } else if (iceCream.getCost() > purse) {
+                throw new NotEnoughMoneyException("No tienes dinero suficiente introducido");
+            } else if (iceCream.getQuantity() <= 0) {
                 throw new QuantityExceededException();
-            } else if (iceCream.getCost()> purse) {
-                throw new NotEnoughMoneyException("No tienes dinero suficiente almacenado");
             } else {
                 this.setPurse(this.purse - iceCream.getCost());
-                this.setRevenue(iceCream.getCost());
-                iceCream.setQuantity(iceCream.getQuantity()- 1);
+                this.setRevenue(this.revenue+iceCream.getCost());
+                iceCream.setQuantity(iceCream.getQuantity() - 1);
                 helado.updateIceCream(iceCream);
+
                 ventas.saveSale(iceCream);
             }
         } catch (Exception e) {
@@ -66,11 +68,13 @@ public class IceCreamMachine {
 
         return iceCream;
     }
-
-
-  
-
-
+    public void refillIceCreams() throws Exception {
+        try (IceCreamDAOimpl helado = new IceCreamDAOimpl()) {
+            helado.refill();
+        } catch (Exception e) {
+            throw e;
+        }
+    }
 
     public double getPurse() {
         return purse;

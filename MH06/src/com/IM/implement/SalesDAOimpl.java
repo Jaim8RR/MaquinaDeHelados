@@ -53,6 +53,7 @@ public class SalesDAOimpl implements SalesDAO, AutoCloseable {
 
     @Override
     public void saveSale(IceCream iceCream) throws Exception {
+        System.out.println("Estoy ");
         String sql = "insert into venta values(datetime('now'), ?, ?, ?, ?, ?)";
         try (PreparedStatement pstm = con.prepareStatement(sql)) {
             pstm.setString(1, iceCream.getPosition());
