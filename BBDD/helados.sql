@@ -1,5 +1,3 @@
-# MaquinaDeHelados
-Maquina de helados para 1º de programacion.
 create table helado(
 	posicion text primary key,
 	nombre text not null,
@@ -27,10 +25,4 @@ insert into helado values ('20','ChocoLoco',1.5,'tarrina',5);
 insert into helado values ('21','TuttiFrutti',1.1,'palo',5);
 insert into helado values ('22','Mentazul',1.1,'cucurucho',5);
 
-public static void cargarDriver() {
-try {
-Class.forName("org.sqlite.JDBC");
-} catch (Exception e) {
-System.exit(1);
-}
-}
+
