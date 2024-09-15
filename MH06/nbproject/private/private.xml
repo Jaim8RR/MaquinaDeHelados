@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/home/dev/NetBeansProjects/MaquinaDeHelados/MH06/src/com/IM/gui/Exe.java</file>
+            <file>file:/home/dev/NetBeansProjects/MaquinaDeHelados/MH06/src/com/IM/biz/IceCreamMachine.java</file>
+            <file>file:/home/dev/NetBeansProjects/MaquinaDeHelados/MH06/src/com/IM/dao/interfaces/SalesDAO.java</file>
+            <file>file:/home/dev/NetBeansProjects/MaquinaDeHelados/MH06/src/com/IM/gui/ExeGraph.java</file>
+            <file>file:/home/dev/NetBeansProjects/MaquinaDeHelados/MH06/src/com/IM/gui/InsertMoneyJDialog.java</file>
+            <file>file:/home/dev/NetBeansProjects/MaquinaDeHelados/MH06/src/com/IM/gui/SalesJDialog.java</file>
+            <file>file:/home/dev/NetBeansProjects/MaquinaDeHelados/MH06/src/com/IM/implement/SalesDAOimpl.java</file>
+        </group>
+    </open-files>
+</project-private>
